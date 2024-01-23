@@ -2,6 +2,7 @@ package com.example.marsestatedata.network
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import kotlinx.coroutines.Deferred
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -21,11 +22,12 @@ private val moshi = Moshi.Builder()
 private val retrofit = Retrofit.Builder()
     /*.addConverterFactory(ScalarsConverterFactory.create()) */// Converter for string
     .addConverterFactory(MoshiConverterFactory.create(moshi)) // Converter JSON response from server to Kotlin object
+    /*.addCallAdapterFactory(CoroutineCall)*/
     .baseUrl(BASE_URL).build()
 
 interface MarsApiService {
     @GET("realestate")
-    fun getProperties(): Call<List<MarsProperty>> // Do request to server
+    suspend fun getProperties(): Deferred<List<MarsProperty>> // Do request to server
 }
 
 object MarsApi {
