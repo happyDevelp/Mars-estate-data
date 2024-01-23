@@ -24,7 +24,7 @@ class OverviewViewModel() : ViewModel() {
     private fun getMarsRealEstateProperties() {
         _response.value = "Set the Mars API Response here!"
 
-/*        MarsApi.retrofitService.getProperties().enqueue(object: Callback<String>{
+        MarsApi.retrofitService.getProperties().enqueue(object: Callback<String>{
             override fun onResponse(call: Call<String>, response: Response<String>) {
                 _response.value = response.body()
             }
@@ -33,6 +33,6 @@ class OverviewViewModel() : ViewModel() {
                 _response.value = "Failure: ${t.message}"
             }
 
-        })*/
+        })
     }
 }

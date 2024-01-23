@@ -14,7 +14,7 @@ import com.example.marsestatedata.databinding.FragmentOverviewBinding
  * This fragment shows the the status of the Mars real-estate web services transaction.
  */
 class OverviewFragment : Fragment() {
-    /*private lateinit var binding: FragmentOverviewBinding*/
+    private lateinit var binding: FragmentOverviewBinding
     private val viewModel: OverviewViewModel by lazy {
         ViewModelProvider(this).get(OverviewViewModel::class.java)
     }
@@ -22,18 +22,14 @@ class OverviewFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        val binding = FragmentOverviewBinding.inflate(inflater)
-        binding.lifecycleOwner = this
-        setHasOptionsMenu(true)
-        binding.viewModel = viewModel
+        binding = FragmentOverviewBinding.inflate(layoutInflater)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        /*viewModel.response.observe(viewLifecycleOwner){
-            binding.textResponse.text = it
-        }*/
+        viewModel.response.observe(viewLifecycleOwner){ binding.textResponse.text = it }
+
 
     }
 
