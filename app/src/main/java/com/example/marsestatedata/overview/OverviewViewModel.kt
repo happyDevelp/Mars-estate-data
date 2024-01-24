@@ -29,9 +29,8 @@ class OverviewViewModel() : ViewModel() {
     private fun getMarsRealEstateProperties() {
         _response.value = "Set the Mars API Response here!"
         CoroutineScope(Dispatchers.Main).launch {
-            var getPropertiesDeferred = MarsApi.retrofitService.getProperties()
             try {
-                var listResult = getPropertiesDeferred.await()
+                var listResult = MarsApi.retrofitService.getProperties()
                 _response.value = "Success ${listResult.size} Mars properties retrieved"
             }
             catch (t:Throwable){

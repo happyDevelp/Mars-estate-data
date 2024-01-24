@@ -27,7 +27,7 @@ private val retrofit = Retrofit.Builder()
 
 interface MarsApiService {
     @GET("realestate")
-    suspend fun getProperties(): Deferred<List<MarsProperty>> // Do request to server
+    suspend fun getProperties(): List<MarsProperty> // Do request to server
 }
 
 object MarsApi {
