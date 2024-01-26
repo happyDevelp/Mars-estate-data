@@ -18,27 +18,33 @@ import retrofit2.Response
 
 class OverviewViewModel() : ViewModel() {
 
-    private val _response = MutableLiveData<String>()
-    val response: LiveData<String>
-        get() = _response
+    private val _status = MutableLiveData<String>()
+    val status: LiveData<String>
+        get() = _status
 
-    init {
-        getMarsRealEstateProperties()
-    }
+    private val _property = MutableLiveData<MarsProperty>()
+    val property: LiveData<MarsProperty>
+        get() = _property
+
+    init { getMarsRealEstateProperties() }
+
 
     private fun getMarsRealEstateProperties() {
-        _response.value = "Set the Mars API Response here!"
+        _status.value = "Set the Mars API Response here!"
         CoroutineScope(Dispatchers.Main).launch {
+
             try {
                 var listResult = MarsApi.retrofitService.getProperties()
-                _response.value = "Success ${listResult.size} Mars properties retrieved"
+                _status.value = "Success: ${listResult.size} Mars properties retrieved"
+                if (listResult.size > 0) {
+                    _property.value = listResult[0]
+                }
             }
             catch (t:Throwable){
-                _response.value = "Failure: ${t.message}"
+                _status.value = "Failure: ${t.message}"
             }
 
         }
-
     }
 
     override fun onCleared() {

@@ -81,6 +81,7 @@ dependencies {
 
  /*   // Glide
     implementation ("com.github.bumptech.glide:glide:4.8.0")*/
+    implementation ("com.github.bumptech.glide:glide:4.16.0")
 
     // RecyclerView
     implementation ("androidx.recyclerview:recyclerview:1.3.2")

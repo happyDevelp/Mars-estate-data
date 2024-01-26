@@ -22,7 +22,6 @@ private val moshi = Moshi.Builder()
 private val retrofit = Retrofit.Builder()
     /*.addConverterFactory(ScalarsConverterFactory.create()) */// Converter for string
     .addConverterFactory(MoshiConverterFactory.create(moshi)) // Converter JSON response from server to Kotlin object
-    /*.addCallAdapterFactory(CoroutineCall)*/
     .baseUrl(BASE_URL).build()
 
 interface MarsApiService {
