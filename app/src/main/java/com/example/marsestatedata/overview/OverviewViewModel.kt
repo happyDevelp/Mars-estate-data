@@ -1,25 +1,22 @@
 package com.example.marsestatedata.overview
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.example.marsestatedata.network.MarsApi
 import com.example.marsestatedata.network.MarsProperty
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+
+
+enum class MarsApiStatus { LOADING, ERROR, DONE }
 
 class OverviewViewModel() : ViewModel() {
 
-    private val _status = MutableLiveData<String>()
-    val status: LiveData<String>
+    private val _status = MutableLiveData<MarsApiStatus>()
+    val status: LiveData<MarsApiStatus>
         get() = _status
 
     private val _properties = MutableLiveData<List<MarsProperty>>()
@@ -30,18 +27,16 @@ class OverviewViewModel() : ViewModel() {
 
 
     private fun getMarsRealEstateProperties() {
-        _status.value = "Set the Mars API Response here!"
         CoroutineScope(Dispatchers.Main).launch {
-
             try {
+                _status.value = MarsApiStatus.LOADING
                 var listResult = MarsApi.retrofitService.getProperties()
-                _status.value = "Success: ${listResult.size} Mars properties retrieved"
-                if (listResult.isNotEmpty()) {
-                    _properties.value = listResult
-                }
+                _status.value = MarsApiStatus.DONE
+                _properties.value = listResult
             }
             catch (t:Throwable){
-                _status.value = "Failure: ${t.message}"
+                _status.value = MarsApiStatus.ERROR
+                _properties.value = ArrayList()
             }
 
         }

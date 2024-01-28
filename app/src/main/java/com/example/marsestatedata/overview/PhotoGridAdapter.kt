@@ -31,7 +31,7 @@ class PhotoGridAdapter: androidx.recyclerview.widget.ListAdapter<MarsProperty, P
         }
 
         override fun areContentsTheSame(oldItem: MarsProperty, newItem: MarsProperty): Boolean {
-            TODO("Not yet implemented")
+            return oldItem.id == newItem.id
         }
 
     }

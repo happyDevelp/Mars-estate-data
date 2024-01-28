@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.marsestatedata.R
 import com.example.marsestatedata.bindImage
 import com.example.marsestatedata.bindRecycleView
+import com.example.marsestatedata.bindStatus
 import com.example.marsestatedata.databinding.FragmentOverviewBinding
 import com.example.marsestatedata.databinding.GridViewItemBinding
 import com.example.marsestatedata.network.MarsProperty
@@ -50,6 +51,11 @@ class OverviewFragment : Fragment() {
         viewModel.properties.observe(viewLifecycleOwner){
             bindRecycleView(recycleView = binding.photosGrid, data = it)
         }
+
+        viewModel.status.observe(viewLifecycleOwner){
+            bindStatus(binding.statusImage, it)
+        }
+
 
     }
 
