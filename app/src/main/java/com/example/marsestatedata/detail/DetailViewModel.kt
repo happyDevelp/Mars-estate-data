@@ -7,8 +7,15 @@ import androidx.lifecycle.MutableLiveData
 import com.example.marsestatedata.network.MarsProperty
 
 class DetailViewModel(marsProperty: MarsProperty, app: Application) : AndroidViewModel(app) {
+    private val _selectedProperty = MutableLiveData<MarsProperty>()
+    val selectedProperty: LiveData<MarsProperty>
+        get() = _selectedProperty
 
-    private val _imgUrl = MutableLiveData<String>()
-    val imgUrl: LiveData<String>
-        get() = _imgUrl
+    init { _selectedProperty.value = marsProperty }
+
+
+
+
+
+
 }

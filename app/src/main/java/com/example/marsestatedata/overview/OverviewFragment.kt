@@ -46,7 +46,9 @@ class OverviewFragment : Fragment() {
         }*/
 
 
-        binding.photosGrid.adapter = PhotoGridAdapter()
+        binding.photosGrid.adapter = PhotoGridAdapter(PhotoGridAdapter.OnClickListener {
+            viewModel.displayPropertyDetails(it)
+        })
 
         viewModel.properties.observe(viewLifecycleOwner){
             bindRecycleView(recycleView = binding.photosGrid, data = it)
