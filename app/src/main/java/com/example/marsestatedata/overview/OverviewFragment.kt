@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.marsestatedata.R
 import com.example.marsestatedata.bindImage
 import com.example.marsestatedata.bindRecycleView
@@ -56,6 +57,13 @@ class OverviewFragment : Fragment() {
 
         viewModel.status.observe(viewLifecycleOwner){
             bindStatus(binding.statusImage, it)
+        }
+
+        viewModel.navigateToSelectedProperty.observe(viewLifecycleOwner){
+            if (it != null){
+                findNavController().navigate(OverviewFragmentDirections.actionOverviewFragmentToDetailFragment(it))
+                viewModel.displayPropertyDetailsComplete()
+            }
         }
 
 

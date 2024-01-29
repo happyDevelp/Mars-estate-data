@@ -9,7 +9,8 @@ import com.example.marsestatedata.bindImage
 import com.example.marsestatedata.databinding.GridViewItemBinding
 import com.example.marsestatedata.network.MarsProperty
 
-class PhotoGridAdapter(private val onClickListener: OnClickListener): androidx.recyclerview.widget.ListAdapter<MarsProperty, PhotoGridAdapter.MarsPropertyViewHolder>(DifCallBack) {
+class PhotoGridAdapter(private val onClickListener: OnClickListener)
+    : androidx.recyclerview.widget.ListAdapter<MarsProperty, PhotoGridAdapter.MarsPropertyViewHolder>(DifCallBack) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MarsPropertyViewHolder {
         return MarsPropertyViewHolder(GridViewItemBinding.inflate(LayoutInflater.from(parent.context)))
     }
