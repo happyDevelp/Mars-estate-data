@@ -21,11 +21,20 @@ The app leverages the following components from the Jetpack library:
 
 ## Screenshots
 
-![Screenshot 1](https://github.com/happyDevelp/myQuiz/blob/master/app/src/androidTest/Readme_screenshots/Screenshot_2024_01_31_12_49_35_840_com_example_marsestatedata.jpg)
+*Main screen*
 
-![Screenshot 2](https://github.com/happyDevelp/myQuiz/blob/master/app/src/androidTest/Readme_screenshots/Screenshot_2024_01_31_12_49_46_344_com_example_marsestatedata.jpg)
+<img src="https://github.com/happyDevelp/myQuiz/blob/master/app/src/androidTest/Readme_screenshots/Screenshot_2024_01_31_12_49_35_840_com_example_marsestatedata.jpg" width="400" height="900">
 
-![Screenshot 3](https://github.com/happyDevelp/myQuiz/blob/master/app/src/androidTest/Readme_screenshots/Screenshot_2024_01_31_12_49_53_516_com_example_marsestatedata.jpg)
+
+*Sort queries from server*
+
+<img src="https://github.com/happyDevelp/myQuiz/blob/master/app/src/androidTest/Readme_screenshots/Screenshot_2024_01_31_12_49_46_344_com_example_marsestatedata.jpg" width="400" height="900">
+
+
+*Information about each property*
+
+<img src="https://github.com/happyDevelp/myQuiz/blob/master/app/src/androidTest/Readme_screenshots/Screenshot_2024_01_31_12_49_53_516_com_example_marsestatedata.jpg" width="400" height="900">
+
 
 ## Getting Started
 
