@@ -8,6 +8,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Query
 
 /**
 This class it`s an API class where we describe how retrofit will fetch data from web-service.
@@ -24,9 +25,15 @@ private val retrofit = Retrofit.Builder()
     .addConverterFactory(MoshiConverterFactory.create(moshi)) // Converter JSON response from server to Kotlin object
     .baseUrl(BASE_URL).build()
 
+enum class MarsApiFilter(val value: String) {
+    SHOW_RENT("rent"),
+    SHOW_BUY("buy"),
+    SHOW_ALL("all")
+}
+
 interface MarsApiService {
     @GET("realestate")
-    suspend fun getProperties(): List<MarsProperty> // Do request to server
+    suspend fun getProperties( @Query("filter")type: String ): List<MarsProperty> // Do request to server
 }
 
 object MarsApi {

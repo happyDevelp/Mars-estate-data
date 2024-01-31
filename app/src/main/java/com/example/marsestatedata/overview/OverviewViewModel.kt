@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.marsestatedata.network.MarsApi
+import com.example.marsestatedata.network.MarsApiFilter
 import com.example.marsestatedata.network.MarsProperty
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -23,18 +24,18 @@ class OverviewViewModel() : ViewModel() {
     val properties: LiveData<List<MarsProperty>>
         get() = _properties
 
-    init { getMarsRealEstateProperties() }
+    init { getMarsRealEstateProperties(MarsApiFilter.SHOW_ALL) }
 
     private val _navigateToSelectedProperty = MutableLiveData<MarsProperty?>()
     val navigateToSelectedProperty: LiveData<MarsProperty?>
         get() = _navigateToSelectedProperty
 
 
-    private fun getMarsRealEstateProperties() {
+    private fun getMarsRealEstateProperties(filter: MarsApiFilter) {
         CoroutineScope(Dispatchers.Main).launch {
             try {
                 _status.value = MarsApiStatus.LOADING
-                var listResult = MarsApi.retrofitService.getProperties()
+                var listResult = MarsApi.retrofitService.getProperties(filter.value)
                 _status.value = MarsApiStatus.DONE
                 _properties.value = listResult
             }
@@ -51,11 +52,17 @@ class OverviewViewModel() : ViewModel() {
         Job().cancel()
     }
 
+    //trigger
     fun displayPropertyDetails(marsProperty: MarsProperty){
         _navigateToSelectedProperty.value = marsProperty
     }
 
+    //trigger
     fun displayPropertyDetailsComplete(){
         _navigateToSelectedProperty.value = null
+    }
+
+    fun updateFilter(filter: MarsApiFilter) {
+        getMarsRealEstateProperties(filter)
     }
 }

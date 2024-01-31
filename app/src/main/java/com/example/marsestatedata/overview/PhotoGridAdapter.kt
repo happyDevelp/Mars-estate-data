@@ -17,6 +17,7 @@ class PhotoGridAdapter(private val onClickListener: OnClickListener)
 
     override fun onBindViewHolder(holder: MarsPropertyViewHolder, position: Int) {
         val marsProperty = getItem(position)
+
         holder.itemView.setOnClickListener {
             onClickListener.onClick(marsProperty)
         }

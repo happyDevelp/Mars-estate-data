@@ -5,8 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -16,6 +19,7 @@ import com.example.marsestatedata.bindRecycleView
 import com.example.marsestatedata.bindStatus
 import com.example.marsestatedata.databinding.FragmentOverviewBinding
 import com.example.marsestatedata.databinding.GridViewItemBinding
+import com.example.marsestatedata.network.MarsApiFilter
 import com.example.marsestatedata.network.MarsProperty
 
 /**
@@ -39,17 +43,17 @@ class OverviewFragment : Fragment() {
         // Allows Data Binding to Observe LiveData with the lifecycle of this Fragment
         binding.lifecycleOwner = this
 
-        // Giving the binding access to the OverviewViewModel
-        /*binding.viewModel = viewModel*/
-
-/*       viewModel.property.observe(viewLifecycleOwner){
-            binding.textResponse.text = it.imgSrcUrl
-        }*/
-
 
         binding.photosGrid.adapter = PhotoGridAdapter(PhotoGridAdapter.OnClickListener {
             viewModel.displayPropertyDetails(it)
         })
+
+        viewModel.navigateToSelectedProperty.observe(viewLifecycleOwner){
+            if (it != null){
+                findNavController().navigate(OverviewFragmentDirections.actionOverviewFragmentToDetailFragment(it))
+                viewModel.displayPropertyDetailsComplete()
+            }
+        }
 
         viewModel.properties.observe(viewLifecycleOwner){
             bindRecycleView(recycleView = binding.photosGrid, data = it)
@@ -59,19 +63,30 @@ class OverviewFragment : Fragment() {
             bindStatus(binding.statusImage, it)
         }
 
-        viewModel.navigateToSelectedProperty.observe(viewLifecycleOwner){
-            if (it != null){
-                findNavController().navigate(OverviewFragmentDirections.actionOverviewFragmentToDetailFragment(it))
-                viewModel.displayPropertyDetailsComplete()
+
+        val menuHost: MenuHost = requireActivity()
+        menuHost.addMenuProvider(menuProvider(), viewLifecycleOwner)
+
+    }
+
+    private fun menuProvider(): MenuProvider {
+        return object : MenuProvider{
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.overflow_menu, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                viewModel.updateFilter(
+                    when(menuItem.itemId) {
+                        R.id.show_rent_menu -> MarsApiFilter.SHOW_RENT
+                        R.id.show_buy_menu -> MarsApiFilter.SHOW_BUY
+                        else -> MarsApiFilter.SHOW_ALL
+                    }
+                )
+                return false
             }
         }
-
-
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.overflow_menu, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
 
 }
